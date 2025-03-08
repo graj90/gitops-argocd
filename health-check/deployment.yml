@@ -19,3 +19,17 @@ spec:
         envFrom:
         - configMapRef:
             name: moving-shapes-colors
+        livenessProbe:  # Adding a failing liveness probe
+          httpGet:
+            path: /invalid-path  # This path doesn't exist
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 1
+        readinessProbe:  # Adding a failing readiness probe
+          httpGet:
+            path: /invalid-path
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 5
+          failureThreshold: 1
